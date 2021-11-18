@@ -10,7 +10,7 @@ class MainInlineKeyboardMaker {
 
   public make(data: Catalogue[]) {
     const catalogueButtons = data.map((catalogue) =>
-      this.makeButton(catalogue.name, catalogue.url)
+      this.makeButton(catalogue.name, `https://t.me/${catalogue.url}`)
     )
 
     const buttons: InlineKeyboardButton[][] = []

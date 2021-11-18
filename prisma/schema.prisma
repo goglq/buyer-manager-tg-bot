@@ -1,8 +1,6 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["interactiveTransactions"]
 }
 
 datasource db {
@@ -11,20 +9,29 @@ datasource db {
 }
 
 model Catalogue {
-  id          Int @id @default(autoincrement())
-  name        String @db.VarChar(50)
-  url         String
-  products    Product[]
+  id       Int       @id @default(autoincrement())
+  name     String    @db.VarChar(50)
+  url      String
+  products Product[]
 
   @@map("catalogues")
 }
 
 model Product {
-  id            Int @id @default(autoincrement())
-  name          String @db.VarChar()
-  description   String @db.Text()
-  catalogueId   Int
-  catalogue     Catalogue @relation(fields: [catalogueId], references: [id])
+  id           Int            @id @default(autoincrement())
+  name         String         @db.VarChar
+  description  String
+  catalogueId  Int
+  messageId    Int?
+  catalogue    Catalogue      @relation(fields: [catalogueId], references: [id], onDelete: Cascade)
+  pictureLinks PictureLinks[]
 
   @@map("products")
+}
+
+model PictureLinks {
+  id        Int     @id @default(autoincrement())
+  url       String  @db.VarChar
+  productId Int
+  product   Product @relation(fields: [productId], references: [id])
 }

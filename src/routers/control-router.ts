@@ -37,6 +37,12 @@ const controlRouter: FastifyPluginAsync = async (fastify, opts) => {
       return LinkKeeper.instance.supportLink
     }
   )
+
+  fastify.get('/support', async (req, res) => {
+    fastify.log.warn('redirecting?')
+    await res.redirect(LinkKeeper.instance.supportLink.url)
+    return
+  })
 }
 
 export default controlRouter

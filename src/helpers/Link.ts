@@ -13,6 +13,6 @@ export default class Link {
   }
 
   public get url() {
-    return this._url
+    return `https://t.me/${this._url}`
   }
 }

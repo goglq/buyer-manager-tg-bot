@@ -7,6 +7,7 @@ import fastifyCors from 'fastify-cors'
 import telegrafPlugin from 'fastify-telegraf'
 import path from 'path/posix'
 import pino from 'pino'
+import botPlugin from './plugins/bot-plugin'
 import { superWizard, superWizardId } from './wizards/super-wizard'
 
 const BOT_TOKEN = process.env.BOT_TOKEN
@@ -24,6 +25,12 @@ if (!WEBHOOK_URL) {
   throw new Error('WEBHOOK_URL must be provided!')
 }
 
+declare module 'fastify' {
+  export interface FastifyInstance {
+    telegramBot: Telegraf<Scenes.WizardContext>
+  }
+}
+
 const bot = new Telegraf<Scenes.WizardContext>(BOT_TOKEN)
 
 const app = fastify({
@@ -35,10 +42,18 @@ const app = fastify({
 const SECRET_PATH = `/telegraf/${bot.secretPathComponent()}`
 app.register(fastifyCors, {
   origin: (origin, cb) => {
-    cb(null, true)
+    if (
+      process.env.NODE_ENV == 'development' ||
+      process.env.ALLOWED_ORIGIN === origin
+    ) {
+      cb(null, true)
+      return
+    }
+    cb(new Error('Not Allowed'), false)
   },
 })
 app.register(telegrafPlugin, { bot, path: SECRET_PATH })
+app.register(botPlugin, { bot: bot })
 app.register(fastifyAutoload, { dir: path.join(__dirname, 'routers') })
 
 const stage = new Scenes.Stage<Scenes.WizardContext>([superWizard], {
