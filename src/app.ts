@@ -13,7 +13,7 @@ import { superWizard, superWizardId } from './wizards/super-wizard'
 const BOT_TOKEN = process.env.BOT_TOKEN
 const DATABASE_URL = process.env.DATABASE_URL
 const WEBHOOK_URL = process.env.WEBHOOK_URL
-const PORT = process.env.PORT ?? 3000
+const PORT = process.env.PORT
 
 if (!BOT_TOKEN) {
   throw new Error('BOT_TOKEN must be provided!')
@@ -67,7 +67,7 @@ bot.telegram.setWebhook(WEBHOOK_URL + SECRET_PATH).then(() => {
   console.log('Webhook is set on', WEBHOOK_URL)
 })
 
-app.listen(PORT).then(() => {
+app.listen(PORT || 3000).then(() => {
   console.log('Listening on port', PORT)
 })
 
