@@ -43,7 +43,7 @@ const SECRET_PATH = `/telegraf/${bot.secretPathComponent()}`
 app.register(fastifyCors, {
   origin: (origin, cb) => {
     if (
-      process.env.NODE_ENV == 'development' ||
+      process.env.NODE_ENV === 'development' ||
       process.env.ALLOWED_ORIGIN === origin
     ) {
       cb(null, true)
