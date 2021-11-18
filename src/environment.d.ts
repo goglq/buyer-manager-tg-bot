@@ -1,7 +1,7 @@
 declare global {
   namespace NodeJS {
     interface ProcessEnv {
-      PORT: string
+      PORT: number
       WEBHOOK_URL: string
       BOT_TOKEN: string
       DATABASE_URL: string
