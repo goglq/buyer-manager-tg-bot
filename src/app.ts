@@ -55,7 +55,7 @@ app.register(telegrafPlugin, { bot, path: SECRET_PATH })
 app.register(botPlugin, { bot: bot })
 app.register(fastifyAutoload, { dir: path.join(__dirname, 'routers') })
 
-app.listen(PORT).then(() => {
+app.listen(PORT, '0.0.0.0').then(() => {
   console.log('Listening on port', PORT)
 })
 
