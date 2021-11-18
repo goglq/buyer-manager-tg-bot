@@ -59,5 +59,5 @@ app.listen(PORT).then(() => {
   console.log('Listening on port', PORT)
 })
 
-// process.once('SIGINT', () => app.close())
-// process.once('SIGTERM', () => app.close())
+process.once('SIGINT', () => app.close())
+process.once('SIGTERM', () => app.close())
