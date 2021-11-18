@@ -40,20 +40,20 @@ app.register(fastifyCors, {
     cb(new Error('Not Allowed'), false)
   },
 })
+const SECRET_PATH = `/telegraf/${bot.secretPathComponent()}`
+app.register(telegrafPlugin, { bot, path: SECRET_PATH })
+app.register(botPlugin, { bot: bot })
+app.register(fastifyAutoload, { dir: path.join(__dirname, 'routers') })
 
 const stage = new Scenes.Stage<Scenes.WizardContext>([superWizard], {
   default: superWizardId,
 })
-
 bot.use(session())
 bot.use(stage.middleware())
-const SECRET_PATH = `/telegraf/${bot.secretPathComponent()}`
+
 bot.telegram.setWebhook(WEBHOOK_URL + SECRET_PATH).then(() => {
   console.log('Webhook is set on', WEBHOOK_URL)
 })
-app.register(telegrafPlugin, { bot, path: SECRET_PATH })
-app.register(botPlugin, { bot: bot })
-app.register(fastifyAutoload, { dir: path.join(__dirname, 'routers') })
 
 app.listen(PORT, '0.0.0.0').then(() => {
   console.log('Listening on port', PORT)

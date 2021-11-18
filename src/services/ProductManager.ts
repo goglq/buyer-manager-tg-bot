@@ -51,7 +51,13 @@ export default class ProductManager {
             })),
           })
 
-          message = await this.messageMaker.make(newProduct)
+          message = await this.messageMaker.make({
+            id: newProduct.id,
+            name: newProduct.name,
+            description: newProduct.description,
+            catalogueUrl: newProduct.catalogue.url,
+            pictureUrls: product.photoUrls,
+          })
 
           await prisma.product.update({
             data: { messageId: message.message_id },
@@ -61,6 +67,7 @@ export default class ProductManager {
           return { newProduct, newPictures }
         }
       )
+      this.fastify.log.warn('result done')
 
       return result
     } catch (err) {
@@ -94,7 +101,15 @@ export default class ProductManager {
             updatedProduct.messageId
           )
 
-          const updatedMessage = await this.messageMaker.make(updatedProduct)
+          const updatedMessage = await this.messageMaker.make({
+            id: updatedProduct.id,
+            name: updatedProduct.name,
+            description: updatedProduct.description,
+            catalogueUrl: updatedProduct.catalogue.url,
+            pictureUrls: updatedProduct.pictureLinks.map(
+              (pictureLink) => pictureLink.url
+            ),
+          })
 
           await prisma.product.update({
             data: { messageId: updatedMessage.message_id },

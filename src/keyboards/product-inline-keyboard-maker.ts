@@ -1,9 +1,9 @@
 import { Product } from '@prisma/client'
 import { Markup } from 'telegraf'
-import LinkKeeper from '../helpers/LinkKeeper'
+import { IProductMessageDto } from '../models/Product'
 
 class ProductInlineKeyboardMaker {
-  make(data: Product) {
+  make(data: IProductMessageDto) {
     const keyboard = Markup.inlineKeyboard([
       [
         Markup.button.url(

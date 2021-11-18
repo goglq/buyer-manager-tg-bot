@@ -17,4 +17,10 @@ export interface IProductDto {
   photoUrls: string[]
 }
 
-export interface IProductWithCatalogue {}
+export interface IProductMessageDto {
+  id: number
+  name: string
+  description: string
+  catalogueUrl: string
+  pictureUrls: string[]
+}
