@@ -14,7 +14,7 @@ const BOT_TOKEN = process.env.BOT_TOKEN
 const DATABASE_URL = process.env.DATABASE_URL
 const WEBHOOK_URL =
   process.env.WEBHOOK_URL ??
-  `https://${process.env.HEROKU_APPNAME}.herokuapp.com`
+  `https://${process.env.HEROKU_APP_NAME}.herokuapp.com`
 const PORT = process.env.PORT ?? 3000
 
 if (!BOT_TOKEN) throw new Error('BOT_TOKEN must be provided!')
