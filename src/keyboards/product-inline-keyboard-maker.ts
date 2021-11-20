@@ -1,5 +1,5 @@
 import { Markup } from 'telegraf'
-import { IProductMessageDto } from '../dtos/Product'
+import { IProductMessageDto } from '../dtos/ProductDto'
 
 class ProductInlineKeyboardMaker {
   make(data: IProductMessageDto) {

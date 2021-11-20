@@ -2,7 +2,7 @@ import { FastifyInstance } from 'fastify'
 import { Message } from 'telegraf/typings/core/types/typegram'
 import MessageMaker from '../helpers/MessageMaker'
 import Database from '../models/db'
-import { IProductDto } from '../dtos/Product'
+import { IProductDto } from '../dtos/ProductDto'
 
 export default class ProductManager {
   private fastify: FastifyInstance

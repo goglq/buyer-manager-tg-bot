@@ -1,6 +1,6 @@
 import { FastifyInstance } from 'fastify'
 import productInlineKeyboardMaker from '../keyboards/product-inline-keyboard-maker'
-import { IProductMessageDto as IProductMessageDto } from '../dtos/Product'
+import { IProductMessageDto as IProductMessageDto } from '../dtos/ProductDto'
 
 export default class MessageMaker {
   private fastify: FastifyInstance
