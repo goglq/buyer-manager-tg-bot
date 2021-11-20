@@ -26,7 +26,16 @@ export default class ProductManager {
   }
 
   public async postProduct(product: IProductDto) {
-    let message: Message.PhotoMessage
+    let message: Message.PhotoMessage = {
+      message_id: -1,
+      date: 0,
+      chat: {
+        id: 0,
+        title: '',
+        type: 'channel',
+      },
+      photo: [],
+    }
     try {
       const result = await Database.instance.client.$transaction(
         async (prisma) => {
@@ -42,12 +51,16 @@ export default class ProductManager {
             },
           })
 
+          this.fastify.log.info(newProduct)
+
           const newPictures = await prisma.pictureLinks.createMany({
             data: product.photoUrls.map((photoUrl) => ({
               url: photoUrl,
               productId: newProduct.id,
             })),
           })
+
+          this.fastify.log.info(newPictures)
 
           message = await this.messageMaker.make({
             id: newProduct.id,
@@ -57,12 +70,16 @@ export default class ProductManager {
             pictureUrls: product.photoUrls,
           })
 
+          this.fastify.log.info(message)
+
           await prisma.product.update({
             data: { messageId: message.message_id },
             where: { id: newProduct.id },
           })
 
           newProduct.messageId = message.message_id
+
+          this.fastify.log.info(newProduct)
 
           return { newProduct, newPictures }
         }
@@ -71,10 +88,12 @@ export default class ProductManager {
 
       return result
     } catch (err) {
-      this.fastify.telegramBot.telegram.deleteMessage(
-        message!.chat.id,
-        message!.message_id
-      )
+      if (message.message_id !== -1) {
+        this.fastify.telegramBot.telegram.deleteMessage(
+          message.chat.id,
+          message.message_id
+        )
+      }
       this.fastify.log.error(err)
       throw err
     }
