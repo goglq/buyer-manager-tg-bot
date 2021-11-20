@@ -1,14 +1,12 @@
 import { Markup } from 'telegraf'
 import { IProductMessageDto } from '../dtos/ProductDto'
+import LinkKeeper from '../helpers/LinkKeeper'
 
 class ProductInlineKeyboardMaker {
   make(data: IProductMessageDto) {
     const keyboard = Markup.inlineKeyboard([
       [
-        Markup.button.url(
-          'Купить оптом',
-          `${process.env.WEBHOOK_URL}/control/support`
-        ),
+        Markup.button.url('Купить оптом', LinkKeeper.instance.supportLink.url),
         Markup.button.url('Купить в розницу', 'https://t.me/purpaLambo192'),
       ],
       [
