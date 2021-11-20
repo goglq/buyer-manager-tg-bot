@@ -19,7 +19,6 @@ const PORT = process.env.PORT || 3000
 
 if (!BOT_TOKEN) throw new Error('BOT_TOKEN must be provided!')
 if (!DATABASE_URL) throw new Error('DATABASE_URL must be provided!')
-if (!WEBHOOK_URL) throw new Error('WEBHOOK_URL must be provided!')
 
 const bot = new Telegraf<Scenes.WizardContext>(BOT_TOKEN)
 const app = fastify({
