@@ -1,4 +1,5 @@
 import { FastifyPluginAsync } from 'fastify'
+import fastifyCors from 'fastify-cors'
 import { Markup } from 'telegraf'
 import { Message } from 'telegraf/typings/core/types/typegram'
 import LinkKeeper from '../helpers/LinkKeeper'

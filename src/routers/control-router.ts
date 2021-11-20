@@ -1,4 +1,5 @@
 import { FastifyPluginAsync } from 'fastify'
+import fastifyCors from 'fastify-cors'
 import Link from '../helpers/Link'
 import LinkKeeper from '../helpers/LinkKeeper'
 

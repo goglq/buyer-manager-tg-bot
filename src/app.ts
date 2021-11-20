@@ -3,12 +3,12 @@ dotenv.config()
 import { Scenes, session, Telegraf } from 'telegraf'
 import fastify from 'fastify'
 import fastifyAutoload from 'fastify-autoload'
-import fastifyCors from 'fastify-cors'
 import telegrafPlugin from 'fastify-telegraf'
 import path from 'path/posix'
 import pino from 'pino'
 import botPlugin from './plugins/bot-plugin'
 import { superWizard, superWizardId } from './wizards/super-wizard'
+import corsRouterPlugin from './plugins/cors-router-plugin'
 
 const BOT_TOKEN = process.env.BOT_TOKEN
 const DATABASE_URL = process.env.DATABASE_URL
@@ -28,23 +28,10 @@ const app = fastify({
   }),
 })
 
-app.register(fastifyCors, {
-  origin: (origin, cb) => {
-    if (
-      process.env.NODE_ENV === 'development' ||
-      process.env.ALLOWED_ORIGIN === origin
-    ) {
-      cb(null, true)
-      return
-    }
-    cb(new Error('Not Allowed'), false)
-  },
-})
 const SECRET_PATH = `/telegraf/${bot.secretPathComponent()}`
 app.register(telegrafPlugin, { bot, path: SECRET_PATH })
 app.register(botPlugin, { bot: bot })
-app.register(fastifyAutoload, { dir: path.join(__dirname, 'routers') })
-
+app.register(corsRouterPlugin)
 const stage = new Scenes.Stage<Scenes.WizardContext>([superWizard], {
   default: superWizardId,
 })

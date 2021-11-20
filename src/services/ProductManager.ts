@@ -1,10 +1,8 @@
 import { FastifyInstance } from 'fastify'
-import { Markup } from 'telegraf'
 import { Message } from 'telegraf/typings/core/types/typegram'
-import LinkKeeper from '../helpers/LinkKeeper'
 import MessageMaker from '../helpers/MessageMaker'
 import Database from '../models/db'
-import { IProductDto } from '../models/Product'
+import { IProductDto } from '../dtos/Product'
 
 export default class ProductManager {
   private fastify: FastifyInstance
@@ -63,6 +61,8 @@ export default class ProductManager {
             data: { messageId: message.message_id },
             where: { id: newProduct.id },
           })
+
+          newProduct.messageId = message.message_id
 
           return { newProduct, newPictures }
         }

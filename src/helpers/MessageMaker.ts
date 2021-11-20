@@ -1,7 +1,6 @@
-import { Catalogue, PictureLinks, Product } from '@prisma/client'
 import { FastifyInstance } from 'fastify'
 import productInlineKeyboardMaker from '../keyboards/product-inline-keyboard-maker'
-import { IProductMessageDto as IProductMessageDto } from '../models/Product'
+import { IProductMessageDto as IProductMessageDto } from '../dtos/Product'
 
 export default class MessageMaker {
   private fastify: FastifyInstance

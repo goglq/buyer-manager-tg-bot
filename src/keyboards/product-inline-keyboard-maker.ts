@@ -1,6 +1,5 @@
-import { Product } from '@prisma/client'
 import { Markup } from 'telegraf'
-import { IProductMessageDto } from '../models/Product'
+import { IProductMessageDto } from '../dtos/Product'
 
 class ProductInlineKeyboardMaker {
   make(data: IProductMessageDto) {

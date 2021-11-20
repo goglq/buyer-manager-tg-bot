@@ -1,4 +1,5 @@
 import { FastifyPluginAsync } from 'fastify'
+import fastifyCors from 'fastify-cors'
 import Database from '../models/db'
 
 interface IGetCatalogueParams {
