@@ -3,6 +3,7 @@ declare global {
     interface ProcessEnv {
       PORT: number
       WEBHOOK_URL: string
+      HEROKU_APP_NAME: string
       BOT_TOKEN: string
       DATABASE_URL: string
       NODE_ENV: 'development' | 'production'
