@@ -11,12 +11,12 @@ interface ICreateCatalogueBody {
   url: string
 }
 
-interface IGetCataloguesQuerystring {
+interface IGetCatalogueQuerystring {
   products?: boolean
 }
 
 const catalogueRouter: FastifyPluginAsync = async (fastify, opt) => {
-  fastify.get<{ Querystring: IGetCataloguesQuerystring }>(
+  fastify.get<{ Querystring: IGetCatalogueQuerystring }>(
     '/',
     async (req, res) => {
       const { products: includeProducts } = req.query
@@ -27,7 +27,10 @@ const catalogueRouter: FastifyPluginAsync = async (fastify, opt) => {
     }
   )
 
-  fastify.get<{ Params: IGetCatalogueParams }>('/:id', async (req, res) => {
+  fastify.get<{
+    Querystring: IGetCatalogueQuerystring
+    Params: IGetCatalogueParams
+  }>('/:id', async (req, res) => {
     const { id } = req.params
     const catalogue = await Database.instance.client.catalogue.findUnique({
       where: { id: parseInt(id) },
