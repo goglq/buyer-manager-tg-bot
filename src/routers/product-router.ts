@@ -28,7 +28,7 @@ const productRouter: FastifyPluginAsync = async (fastify, opt) => {
     '/',
     async (req, res) => {
       const { catalogueId } = req.query
-      const products = await productManager.getProducts()
+      const products = await productManager.getProducts(catalogueId)
       return products
     }
   )
