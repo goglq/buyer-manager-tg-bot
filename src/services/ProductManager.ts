@@ -13,8 +13,15 @@ export default class ProductManager {
     this.messageMaker = new MessageMaker(fastify)
   }
 
-  public async getProducts() {
-    const products = await Database.instance.client.product.findMany()
+  public async getProducts(catalogueId?: string) {
+    let products
+    if (catalogueId) {
+      products = await Database.instance.client.product.findMany({
+        where: { catalogueId: parseInt(catalogueId) },
+      })
+    } else {
+      products = await Database.instance.client.product.findMany()
+    }
     return products
   }
 
