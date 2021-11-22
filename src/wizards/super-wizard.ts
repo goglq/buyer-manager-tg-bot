@@ -44,12 +44,12 @@ async function sendInfo(ctx: Scenes.WizardContext) {
 }
 
 composer.start(async (ctx) => {
-  if (/detail/.test(ctx.startPayload)) {
-    const productId = ctx.startPayload.split('_')[1]
-    return await sendProductMedia(ctx, productId)
-  }
-
   try {
+    if (/detail/.test(ctx.startPayload)) {
+      const productId = ctx.startPayload.split('_')[1]
+      return await sendProductMedia(ctx, productId)
+    }
+
     await sendInfo(ctx)
   } catch (err) {
     console.log(err)

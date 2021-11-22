@@ -15,4 +15,8 @@ export default class Link {
   public get url() {
     return `https://t.me/${this._url}`
   }
+
+  public get telegram() {
+    return this._url
+  }
 }

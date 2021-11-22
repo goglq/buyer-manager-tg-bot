@@ -6,6 +6,7 @@ declare global {
       HEROKU_APP_NAME: string
       BOT_TOKEN: string
       DATABASE_URL: string
+      ALLOWED_ORIGIN: string
       NODE_ENV: 'development' | 'production'
     }
   }

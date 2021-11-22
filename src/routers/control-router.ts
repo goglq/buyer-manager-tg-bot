@@ -44,6 +44,12 @@ const controlRouter: FastifyPluginAsync = async (fastify, opts) => {
     await res.redirect(LinkKeeper.instance.supportLink.url)
     return
   })
+
+  fastify.get('/info', async (req, res) => {
+    return {
+      supportTelegram: LinkKeeper.instance.supportLink.telegram,
+    }
+  })
 }
 
 export default controlRouter
