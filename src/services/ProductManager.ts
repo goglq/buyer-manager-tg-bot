@@ -111,21 +111,35 @@ export default class ProductManager {
       async (prisma) => {
         if (!product.id) throw new Error('product id is undefined')
 
+        const urls = product.photoUrls.map((url) => ({ url: url }))
+
         const updatedProduct = await prisma.product.update({
           data: {
             name: product.name,
             description: product.description,
             catalogueId: parseInt(product.catalogueId),
+            pictureLinks: {
+              deleteMany: {
+                productId: parseInt(product.id),
+              },
+              createMany: {
+                data: urls,
+              },
+            },
           },
           where: { id: parseInt(product.id) },
           include: { catalogue: true, pictureLinks: true },
         })
 
         if (updatedProduct.messageId) {
-          await this.fastify.telegramBot.telegram.deleteMessage(
-            `@${updatedProduct.catalogue.url}`,
-            updatedProduct.messageId
-          )
+          try {
+            await this.fastify.telegramBot.telegram.deleteMessage(
+              `@${updatedProduct.catalogue.url}`,
+              updatedProduct.messageId
+            )
+          } catch (error) {
+            this.fastify.log.warn(error)
+          }
 
           const updatedMessage = await this.messageMaker.make({
             id: updatedProduct.id,
@@ -147,5 +161,31 @@ export default class ProductManager {
       }
     )
     return updateResult
+  }
+
+  public async deleteProduct(id: string) {
+    const deleted = await Database.instance.client.$transaction(
+      async (prisma) => {
+        const deleted = await prisma.product.delete({
+          where: { id: parseInt(id) },
+          include: {
+            catalogue: true,
+          },
+        })
+
+        try {
+          if (deleted.messageId) {
+            await this.fastify.telegramBot.telegram.deleteMessage(
+              `@${deleted.catalogue.url}`,
+              deleted!.messageId
+            )
+          }
+        } catch (error) {
+          this.fastify.log.warn(error)
+        }
+        return deleted
+      }
+    )
+    return deleted
   }
 }

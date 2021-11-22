@@ -145,25 +145,7 @@ const productRouter: FastifyPluginAsync = async (fastify, opt) => {
 
   fastify.delete<{ Params: IGetProductParams }>('/:id', async (req, res) => {
     const { id } = req.params
-    const deleted = await Database.instance.client.$transaction(
-      async (prisma) => {
-        const deleted = await prisma.product.delete({
-          where: { id: parseInt(id) },
-          include: {
-            catalogue: true,
-          },
-        })
-
-        if (deleted.messageId) {
-          await fastify.telegramBot.telegram.deleteMessage(
-            `@${deleted.catalogue.url}`,
-            deleted.messageId
-          )
-        }
-        return deleted
-      }
-    )
-
+    const deleted = await productManager.deleteProduct(id)
     return deleted
   })
 }
