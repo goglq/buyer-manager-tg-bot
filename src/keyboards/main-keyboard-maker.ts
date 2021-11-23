@@ -22,7 +22,7 @@ class MainInlineKeyboardMaker {
     buttons.push([
       this.makeButton(
         LinkKeeper.instance.supportLink.name,
-        `${process.env.WEBHOOK_URL}/control/support`
+        LinkKeeper.instance.supportLink.url
       ),
     ])
 

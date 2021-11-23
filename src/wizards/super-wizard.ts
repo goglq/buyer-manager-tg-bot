@@ -36,11 +36,15 @@ async function sendProductMedia(ctx: Scenes.WizardContext, productId: string) {
 }
 
 async function sendInfo(ctx: Scenes.WizardContext) {
-  const catalogues = await Database.instance.client.catalogue.findMany()
-  await ctx.replyWithMarkdownV2(
-    'Вас приветствует телеграм бот от *Lucky Buyer*\\. Что вас интересует?',
-    mainKeyboardMaker.make(catalogues)
-  )
+  try {
+    const catalogues = await Database.instance.client.catalogue.findMany()
+    await ctx.replyWithMarkdownV2(
+      'Вас приветствует телеграм бот от *Lucky Buyer*\\. Что вас интересует?',
+      mainKeyboardMaker.make(catalogues)
+    )
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 composer.start(async (ctx) => {
