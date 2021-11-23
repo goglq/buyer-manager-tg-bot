@@ -19,6 +19,7 @@ interface ICreateProductBody {
 
 interface IGetProductQuerystring {
   catalogueId?: string
+  includePictures?: boolean
 }
 
 const productRouter: FastifyPluginAsync = async (fastify, opt) => {
@@ -34,10 +35,12 @@ const productRouter: FastifyPluginAsync = async (fastify, opt) => {
   )
 
   fastify.get<{
+    Querystring: IGetProductQuerystring
     Params: IGetProductParams
   }>('/:id', async (req, res) => {
     const { id } = req.params
-    const product = await productManager.getProduct(id)
+    const { includePictures } = req.query
+    const product = await productManager.getProduct(id, includePictures)
     return product
   })
 

@@ -25,10 +25,18 @@ export default class ProductManager {
     return products
   }
 
-  public async getProduct(id: string) {
-    const product = await Database.instance.client.product.findUnique({
-      where: { id: parseInt(id) },
-    })
+  public async getProduct(id: string, includePictures?: boolean) {
+    let product
+    if (includePictures === undefined || includePictures == false) {
+      product = await Database.instance.client.product.findUnique({
+        where: { id: parseInt(id) },
+      })
+    } else {
+      product = await Database.instance.client.product.findUnique({
+        where: { id: parseInt(id) },
+        include: { pictureLinks: includePictures },
+      })
+    }
     return product
   }
 
