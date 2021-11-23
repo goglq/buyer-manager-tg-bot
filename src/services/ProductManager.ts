@@ -115,60 +115,64 @@ export default class ProductManager {
   }
 
   public async putProduct(product: IProductDto) {
-    const updateResult = await Database.instance.client.$transaction(
-      async (prisma) => {
-        if (!product.id) throw new Error('product id is undefined')
+    try {
+      const updateResult = await Database.instance.client.$transaction(
+        async (prisma) => {
+          if (!product.id) throw new Error('product id is undefined')
 
-        const urls = product.photoUrls.map((url) => ({ url: url }))
+          const urls = product.photoUrls.map((url) => ({ url: url }))
 
-        const updatedProduct = await prisma.product.update({
-          data: {
-            name: product.name,
-            description: product.description,
-            catalogueId: parseInt(product.catalogueId),
-            pictureLinks: {
-              deleteMany: {
-                productId: parseInt(product.id),
-              },
-              createMany: {
-                data: urls,
+          const updatedProduct = await prisma.product.update({
+            data: {
+              name: product.name,
+              description: product.description,
+              catalogueId: parseInt(product.catalogueId),
+              pictureLinks: {
+                deleteMany: {
+                  productId: parseInt(product.id),
+                },
+                createMany: {
+                  data: urls,
+                },
               },
             },
-          },
-          where: { id: parseInt(product.id) },
-          include: { catalogue: true, pictureLinks: true },
-        })
+            where: { id: parseInt(product.id) },
+            include: { catalogue: true, pictureLinks: true },
+          })
 
-        if (updatedProduct.messageId) {
-          try {
-            await this.fastify.telegramBot.telegram.deleteMessage(
-              `@${updatedProduct.catalogue.url}`,
-              updatedProduct.messageId
-            )
-          } catch (error) {
-            this.fastify.log.warn(error)
+          if (updatedProduct.messageId) {
+            try {
+              await this.fastify.telegramBot.telegram.deleteMessage(
+                `@${updatedProduct.catalogue.url}`,
+                updatedProduct.messageId
+              )
+            } catch (error) {
+              this.fastify.log.warn(error)
+            }
+
+            const updatedMessage = await this.messageMaker.make({
+              id: updatedProduct.id,
+              name: updatedProduct.name,
+              description: updatedProduct.description,
+              catalogueUrl: updatedProduct.catalogue.url,
+              pictureUrls: updatedProduct.pictureLinks.map(
+                (pictureLink) => pictureLink.url
+              ),
+            })
+
+            await prisma.product.update({
+              data: { messageId: updatedMessage.message_id },
+              where: { id: updatedProduct.id },
+            })
           }
 
-          const updatedMessage = await this.messageMaker.make({
-            id: updatedProduct.id,
-            name: updatedProduct.name,
-            description: updatedProduct.description,
-            catalogueUrl: updatedProduct.catalogue.url,
-            pictureUrls: updatedProduct.pictureLinks.map(
-              (pictureLink) => pictureLink.url
-            ),
-          })
-
-          await prisma.product.update({
-            data: { messageId: updatedMessage.message_id },
-            where: { id: updatedProduct.id },
-          })
+          return updatedProduct
         }
-
-        return updatedProduct
-      }
-    )
-    return updateResult
+      )
+      return updateResult
+    } catch (error) {
+      this.fastify.log.error(error)
+    }
   }
 
   public async deleteProduct(id: string) {
