@@ -21,8 +21,8 @@ model Product {
   id           Int            @id @default(autoincrement())
   name         String         @db.VarChar
   description  String
-  catalogueId  Int
-  messageId    Int?
+  catalogueId  Int            @map("catalogue_id")
+  messageId    Int?           @map("message_id")
   catalogue    Catalogue      @relation(fields: [catalogueId], references: [id], onDelete: Cascade)
   pictureLinks PictureLinks[]
 
@@ -32,6 +32,8 @@ model Product {
 model PictureLinks {
   id        Int     @id @default(autoincrement())
   url       String  @db.VarChar
-  productId Int
+  productId Int     @map("product_id")
   product   Product @relation(fields: [productId], references: [id])
+
+  @@map("picture_links")
 }
