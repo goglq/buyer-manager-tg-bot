@@ -1,3 +1,8 @@
+@import './variables.css';
+@import './sizing.css';
+@import './flex.css';
+@import './container.css';
+
 * { 
     margin: 0;
     padding: 0;
@@ -14,13 +19,8 @@ header {
     justify-content: center;
     align-items: center;
 
-    height: 5rem;
-    background-color: rgb(226, 188, 84);
-}
-
-.container {
-    width: 500px;
-    margin: 0 auto;
+    height: var(--header-height);
+    background-color: var(--primary-bg-color);
 }
 
 .home-link {
@@ -38,32 +38,3 @@ header {
     color: white;
 }
 
-@media screen {
-    .container {
-        width: 1200px
-    }
-}
-
-@media (max-width: 1300px) {
-    .container {
-        width: 1000px
-    }
-}
-
-@media (max-width: 1250px) {
-    .container {
-        width: 800px
-    }
-}
-
-@media (max-width: 1000px) {
-    .container {
-        width: 500px
-    }
-}
-
-@media (max-width: 500px) {
-    .container {
-        width: 100%
-    }
-}

@@ -1,0 +1,35 @@
+.container {
+    width: 500px;
+    margin: 0 auto;
+}
+
+
+@media screen {
+    .container {
+        width: 1200px
+    }
+}
+
+@media (max-width: 1300px) {
+    .container {
+        width: 1000px
+    }
+}
+
+@media (max-width: 1250px) {
+    .container {
+        width: 800px
+    }
+}
+
+@media (max-width: 1000px) {
+    .container {
+        width: 500px
+    }
+}
+
+@media (max-width: 500px) {
+    .container {
+        width: 100%
+    }
+}
