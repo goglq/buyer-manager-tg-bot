@@ -70,70 +70,53 @@
 //classes
 
 class Car {
-    constructor(model, color) {
-        this.model = model
-        this.wheels = 4
-        this.color = color
-    }
+  constructor(model, color) {
+    this.model = model;
+    this.wheels = 4;
+    this.color = color;
+  }
 
-    toString() {
-        return `${model} has ${wheels} wheels and his color is ${color}`    
-    }
+  toString() {
+    return `${model} has ${wheels} wheels and his color is ${color}`;
+  }
 }
 
-const mcLaren = new Car('McLaren', 'red')
-console.log(mcLaren)
+const mcLaren = new Car("McLaren", "red");
+console.log(mcLaren);
 
-const tractor = new Car('Lamborghini', 'yellow')
-tractor.crane = 'Tractor Crane'
-console.log(tractor)
+const tractor = new Car("Lamborghini", "yellow");
+tractor.crane = "Tractor Crane";
+console.log(tractor);
 
 const entries = new Map([
-    ['key1', 'value1'],
-    ['key2', 'value2']
-])
+  ["key1", "value1"],
+  ["key2", "value2"],
+]);
 
-const fromEntries = Object.fromEntries(entries)
-console.log(fromEntries)
+const fromEntries = Object.fromEntries(entries);
+console.log(fromEntries);
 
-let array_a = []
-console.log(array_a)
+let array_a = [];
+console.log(array_a);
 
-let array_b = array_a
-array_b[0] = 1
-array_b[1] = 'hello'
-array_b[2] = true
+let array_b = array_a;
+array_b[0] = 1;
+array_b[1] = "hello";
+array_b[2] = true;
 
-for(let i = 0; i < array_b.length; i ++){
-    const element = array_b[i]
-    console.log(element)
+for (let i = 0; i < array_b.length; i++) {
+  const element = array_b[i];
+  console.log(element);
 }
 
-delete array_b[2]
+delete array_b[2];
 
-console.log(array_a)
-console.log(array_b)
+console.log(array_a);
+console.log(array_b);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// function a() {
+//   "use strict";
+//   c = ["a", "b"];
+//   console.log(c);
+// }
+// a();
