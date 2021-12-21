@@ -2,6 +2,10 @@
     height: 100vh;
 }
 
+.h-full {
+    height: 100%;
+}
+
 .h-rel-screen {
     height: calc(100vh - var(--header-height));
 }
