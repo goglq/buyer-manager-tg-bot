@@ -1,11 +1,8 @@
-(function() {
-    var codePrinter = document.getElementById("code")
-
-    var fr = new FileReader()
-
-    fr.onload = () => {
-        codePrinter.textContent = fr.result
-    }
-
-    fr.readAsText()
-})()
+async function printCode(file) {
+  var fr = new FileReader()
+  fr.onload = function () {
+    document.getElementById('code').textContent = fr.result
+  }
+  let blob = await fetch(file).then((r) => r.blob())
+  fr.readAsText(blob)
+}
