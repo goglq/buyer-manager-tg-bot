@@ -30,7 +30,7 @@ li {
 #log {
   padding: 10px;
 
-  color:rgb(54, 54, 54);
+  color: rgb(54, 54, 54);
   font-weight: 500;
 
   border-radius: 10px;
@@ -42,7 +42,7 @@ li {
 #code {
   padding: 10px;
 
-  color:white;
+  color: white;
   font-weight: 500;
 
   border-radius: 10px;
@@ -53,6 +53,7 @@ li {
   width: 100%;
   padding: 10px 20px;
 
+  border: 2px solid transparent;
   border-radius: 10px;
 
   font-weight: 500;
@@ -64,9 +65,31 @@ li {
   transition: background-color, color ease-in-out 200ms;
 }
 
+.hw-link {
+  width: 100%;
+  padding: 10px 20px;
+
+  border: 2px solid black;
+  border-radius: 10px;
+
+  font-weight: 500;
+  color: black;
+  text-decoration: none;
+
+  background-color: var(--primary-color);
+
+  transition: background-color, color ease-in-out 200ms;
+}
+
 .lesson-link:hover {
   color: black;
   background-color: var(--primary-color);
+  border-color: black;
+}
+
+.hw-link:hover {
+  color: white;
+  background-color: black;
 }
 
 header {
