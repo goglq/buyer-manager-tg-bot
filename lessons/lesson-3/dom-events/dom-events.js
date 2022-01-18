@@ -56,6 +56,17 @@
 // Local Storage
 // Session Storage
 
-console.dir(window.location)
-console.dir(location)
-console.dir(window)
+// console.dir(window.location)
+// console.dir(location)
+// console.dir(window)
+
+function goToUrl(url) {
+    location.href = url
+}
+
+const google_reroute = document.querySelector('#google_reroute')
+
+google_reroute.addEventListener('click', (e) => {
+    e.preventDefault()
+    goToUrl('https://google.com')
+})
