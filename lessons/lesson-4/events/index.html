@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript #4 Events</title>
+    <link rel="stylesheet" href="../../../css/style.css">
+    <style>
+        .button {
+            display: block;
+            padding: 10px; border-radius: 10px; color: white; text-align: center; cursor: pointer; margin-top: 10px;font-weight: 600;
+        }
+
+        .red {
+            background-color: red;
+        }
+
+        .green {
+            background-color: green;
+        }
+
+        .blue {
+            background-color: blue;
+        }
+    </style>
+</head>
+<!-- <body onclick="out.innerText = 'click detected ' + event.target.nodeName; console.dir(event)"> -->
+<body>
+        
+    <header>
+        <a class="home-link" href="../index.html">Back</a>
+        <h1>Events</h1>
+    </header>
+    <div class="container">
+        <div onclick="alert('DIV')" class="button red">click me</div>
+        <div id='clicablediv' class="button green">clickable div</div>
+        <div id='clicablediv1' class="button blue">clickable div</div>
+        <div id="id_button_back" class="button red">Back</div>
+        <div id='div1' class="button green">Alert Event Type</div>
+        <div id='div2' class="button blue">Create New Node</div>
+        <div id="div3" class="button red">Event Demo</div>
+        <a id='a1' class="button green" href="https://google.com">Go To Google</a>
+
+        <div id='outer_div' class="button blue">
+            <div id='inner_div' class="button red">Inner Button</div>
+        </div>
+    </div>
+    <div id='parent' class="container">
+
+    </div>
+    <p id='out'></p>
+    <script src="./events.js"></script>
+</body>
+</html>
